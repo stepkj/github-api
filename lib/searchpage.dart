@@ -16,30 +16,33 @@ class _SearchpageState extends State<Searchpage> {
   var swipeDirection;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(onPanUpdate: (details) {
-      swipeDirection = details.delta.dx < 0 ? 'left' : 'right';
-    }, onPanEnd: (details) {
-      if (swipeDirection == 'left') {
-        print("ehllo");
-      }
-      child:
-      Scaffold(
-          appBar: AppBar(
-              title: Text("GitPub"),
-              centerTitle: true,
-              backgroundColor: Colors.blue,
-              titleTextStyle: TextStyle(
-                color: kContentColorLightTheme,
-                fontSize: 20,
-              )),
-          body: SingleChildScrollView(
-              child: Container(
-                  child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [],
-          ))));
-      //handle swipe right event
-    });
+    return GestureDetector(
+        child: Scaffold(
+            appBar: AppBar(
+                title: Text("GitPub"),
+                centerTitle: true,
+                backgroundColor: Colors.blue,
+                titleTextStyle: TextStyle(
+                  color: kContentColorLightTheme,
+                  fontSize: 20,
+                )),
+            body: SingleChildScrollView(
+                child: Container(
+                    child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text("Hello"),
+              ],
+            )))),
+        onPanUpdate: (details) {
+          swipeDirection = details.delta.dx < 0 ? 'left' : 'right';
+        },
+        onPanEnd: (details) {
+          if (swipeDirection == 'left') {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => About()));
+          }
+        });
   }
 }
 
@@ -53,8 +56,6 @@ class About extends StatefulWidget {
 class _AboutState extends State<About> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      mainax
-      child: Text("hello"));
+    return Container(child: Text("hello"));
   }
 }
