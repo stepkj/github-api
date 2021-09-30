@@ -1,3 +1,4 @@
+import 'package:api_project/Searchfilter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,18 +13,20 @@ class Searchpage extends StatefulWidget {
 }
 
 class _SearchpageState extends State<Searchpage> {
-  TextEditingController Search = TextEditingController();
+  bool _validate = false;
+  TextEditingController search = TextEditingController();
   var swipeDirection;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         child: Scaffold(
+            backgroundColor: Colors.black,
             appBar: AppBar(
                 title: Text("GitPub"),
                 centerTitle: true,
-                backgroundColor: Colors.blue,
+                backgroundColor: Colors.cyan,
                 titleTextStyle: TextStyle(
-                  color: kContentColorLightTheme,
+                  color: kSecondaryColor,
                   fontSize: 20,
                 )),
             body: SingleChildScrollView(
@@ -31,7 +34,70 @@ class _SearchpageState extends State<Searchpage> {
                     child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("Hello"),
+                SizedBox(height: 100),
+                Image(
+                  image: AssetImage("lib/images/github.png"),
+                  height: 125,
+                  width: 175,
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: TextField(
+                    controller: search,
+                    autofocus: false,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: "Github Repository",
+                      errorText: _validate ? "Search can't be null" : null,
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+                      hintStyle: TextStyle(
+                        color: Colors.white60,
+                      ),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  borderRadius: BorderRadius.circular(30),
+                  onTap: () {
+                    if (search.text.isEmpty) {
+                      setState(() {});
+                      _validate = true;
+                    } else {
+                      _validate = false;
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Search(search.text)));
+                    }
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 13),
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(255, 255, 255, 0.9),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    height: 50,
+                    alignment: Alignment.center,
+                    width: MediaQuery.of(context).size.width - 48,
+                    child: Text(
+                      'Search',
+                      style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 21,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 50,
+                )
               ],
             )))),
         onPanUpdate: (details) {
@@ -46,16 +112,16 @@ class _SearchpageState extends State<Searchpage> {
   }
 }
 
-class About extends StatefulWidget {
+class About extends StatelessWidget {
   const About({Key? key}) : super(key: key);
-
-  @override
-  _AboutState createState() => _AboutState();
-}
-
-class _AboutState extends State<About> {
+  int forks;
+  int stars;
+  int watchers;
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text("hello"));
+    return Container(
+        child: Column(
+      children: [Slider(value: forks)],
+    ));
   }
 }
